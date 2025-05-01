@@ -1,14 +1,15 @@
-/* Reset básico */
 body {
   font-family: 'Georgia', serif;
-  background-color: #1a1a2e; /* Fundo roxo escuro no início */
+  background-color: #000;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: #ffffff;
   margin: 0;
   padding: 0;
-  transition: background-image 0.5s ease-in-out;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Tela inicial */
@@ -20,18 +21,17 @@ body {
   text-align: center;
   height: 100vh;
   background-color: #0d0d1d;
-  padding: 2rem;
+  padding: 20px;
 }
 
 .cover-img {
-  width: 90%;
-  max-width: 700px;
+  width: 100%;
+  max-width: 600px;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
   margin-bottom: 20px;
 }
 
-/* Botão inicial */
 .start-btn {
   background-color: #ffcf4a;
   color: #000;
@@ -47,34 +47,43 @@ body {
   background-color: #f2b600;
 }
 
-/* Container do quiz centralizado */
+/* Quiz */
+#quiz {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
 .container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
   padding: 2rem;
   border-radius: 1rem;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
   text-align: center;
   animation: fadeIn 0.5s ease-in-out;
-  display: none; /* Escondido inicialmente */
 }
 
-/* Botões de respostas e próximo */
+#question h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 button {
   background-color: #4b0082;
   color: white;
-  padding: 0.8rem 1.5rem;
-  margin: 1rem;
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
   transition: 0.3s;
+  width: 100%;
+  max-width: 100%;
 }
 
 button:hover {
@@ -87,8 +96,54 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Animação */
+#nextBtn {
+  margin-top: 1rem;
+  display: none;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .cover-img {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  button {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+  }
+
+  #question h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    margin: 0.4rem 0;
+  }
+
+  .start-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  #question h2 {
+    font-size: 1.1rem;
+  }
+}
+
