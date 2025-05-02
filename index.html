@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seleção das Casas: Que tipo de profissional você é?</title>
+  <title>Seleção das Casas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="start-screen" id="startScreen">
-    <img src="capa.jpeg" alt="Capa" class="cover-img"/>
+    <img src="capa.jpeg" alt="Capa do Quiz" class="cover-img" />
     <button class="start-btn" onclick="startQuiz()">Iniciar Questionário</button>
   </div>
 
   <div class="container" id="quiz" style="display: none;">
+    <h1>Seleção das Casas</h1>
+    <p>Que Tipo de Profissional Você É?</p>
     <div id="question"></div>
     <div id="options"></div>
     <button id="nextBtn" onclick="nextQuestion()">Próxima</button>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
