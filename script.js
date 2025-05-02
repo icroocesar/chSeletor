@@ -1,6 +1,7 @@
 const questions = [
   {
     text: "Como você reage diante de um desafio inesperado no trabalho?",
+    image: "img1.jpg",
     options: [
       { text: "A) Enfrento o problema de imediato, sem hesitar", house: "a" },
       { text: "B) Paro, analiso e busco a melhor solução lógica", house: "b" },
@@ -10,6 +11,7 @@ const questions = [
   },
   {
     text: "Qual dessas qualidades você mais valoriza em um colega de trabalho?",
+    image: "img2.jpg",
     options: [
       { text: "A) Coragem e atitude", house: "a" },
       { text: "B) Inteligência e criatividade", house: "b" },
@@ -19,6 +21,7 @@ const questions = [
   },
   {
     text: "Seu estilo de trabalho é mais...",
+    image: "img3.jpg",
     options: [
       { text: "A) Rápido e prático – prefiro ação!", house: "a" },
       { text: "B) Detalhista e planejado – gosto de saber onde estou pisando", house: "b" },
@@ -28,6 +31,7 @@ const questions = [
   },
   {
     text: "O que te motiva a seguir em frente?",
+    image: "img4.jpg",
     options: [
       { text: "A) Superar limites e fazer a diferença", house: "a" },
       { text: "B) Aprender e expandir conhecimento", house: "b" },
@@ -37,50 +41,63 @@ const questions = [
   },
   {
     text: "Em uma situação de conflito, você...",
+    image: "img5.jpg",
     options: [
       { text: "A) Assume a liderança e resolve logo", house: "a" },
       { text: "B) Busca compreender todas as perspectivas", house: "b" },
       { text: "C) Tenta manter a harmonia entre as partes", house: "c" },
       { text: "D) Usa sua influência para conduzir o resultado desejado", house: "d" },
     ]
-  },
+  }
 ];
 
-const bgImages = [
-  'img1.jpg',
-  'img2.jpg',
-  'img3.jpg',
-  'img4.jpg',
-  'img5.jpg'
-];
+const scores = { a: 0, b: 0, c: 0, d: 0 };
+let currentQuestion = 0;
 
-// Pré-carregamento das imagens
-bgImages.forEach(src => {
+// Pré-carrega imagens
+const preloadImages = [...questions.map(q => q.image), 'grifinoria.jpeg', 'corvinal.jpeg', 'lufalufa.jpeg', 'sonserina.jpeg'];
+preloadImages.forEach(src => {
   const img = new Image();
   img.src = src;
 });
 
-let currentQuestion = 0;
-const scores = { a: 0, b: 0, c: 0, d: 0 };
+function fadeOut(el, callback) {
+  el.classList.remove('show');
+  setTimeout(() => {
+    if (callback) callback();
+  }, 500);
+}
+
+function fadeIn(el) {
+  setTimeout(() => {
+    el.classList.add('show');
+  }, 10); // pequena espera para permitir o transition
+}
 
 function startQuiz() {
-  document.querySelector('.start-screen').style.display = 'none';
-  document.getElementById('quiz').style.display = 'block';
-  renderQuestion();
+  const startScreen = document.getElementById("startScreen");
+  const quiz = document.getElementById("quiz");
+  fadeOut(startScreen, () => {
+    startScreen.style.display = "none";
+    quiz.style.display = "block";
+    quiz.classList.add("fade");
+    fadeIn(quiz);
+    renderQuestion();
+  });
 }
 
 function renderQuestion() {
+  const question = questions[currentQuestion];
+  document.body.style.backgroundImage = `url('${question.image}')`;
+
   const questionDiv = document.getElementById("question");
   const optionsDiv = document.getElementById("options");
   const nextBtn = document.getElementById("nextBtn");
 
-  // Mudar imagem de fundo da página
-  document.body.style.backgroundImage = `url('${bgImages[currentQuestion]}')`;
-
-  questionDiv.innerHTML = `<h2>${questions[currentQuestion].text}</h2>`;
+  questionDiv.innerHTML = `<h2>${question.text}</h2>`;
   optionsDiv.innerHTML = "";
 
-  questions[currentQuestion].options.forEach(opt => {
+  question.options.forEach(opt => {
     const btn = document.createElement("button");
     btn.textContent = opt.text;
     btn.onclick = () => {
@@ -107,19 +124,29 @@ function nextQuestion() {
 
 function showResult() {
   const quiz = document.getElementById("quiz");
-  let max = Math.max(scores.a, scores.b, scores.c, scores.d);
-  let house =
-    scores.a === max ? "Grifinória" :
-    scores.b === max ? "Corvinal" :
-    scores.c === max ? "Lufa-Lufa" :
-    "Sonserina";
+  fadeOut(quiz, () => {
+    let max = Math.max(scores.a, scores.b, scores.c, scores.d);
+    let house =
+      scores.a === max ? "Grifinória" :
+      scores.b === max ? "Corvinal" :
+      scores.c === max ? "Lufa-Lufa" :
+      "Sonserina";
 
-  quiz.innerHTML = `
-    <h1>Sua Casa é...</h1>
-    <h2 style="font-size: 3rem; color: gold;">${house}</h2>
-    <p>Você se destacou pelas qualidades e estratégias que representam essa casa no mundo corporativo mágico!</p>
-  `;
+    const houseImages = {
+      "Grifinória": "grifinoria.jpeg",
+      "Corvinal": "corvinal.jpeg",
+      "Lufa-Lufa": "lufalufa.jpeg",
+      "Sonserina": "sonserina.jpeg"
+    };
 
-  // Imagem final (opcional)
-  document.body.style.backgroundImage = `url('img/final.jpeg')`;
+    document.body.style.backgroundImage = `url('${houseImages[house]}')`;
+
+    quiz.innerHTML = `
+      <h1>Sua Casa é...</h1>
+      <h2 style="font-size: 3rem; color: gold;">${house}</h2>
+      <img src="${houseImages[house]}" alt="${house}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,0.3); margin: 20px 0;">
+      <p>Você se destacou pelas qualidades e estratégias que representam essa casa no mundo corporativo mágico!</p>
+    `;
+    fadeIn(quiz);
+  });
 }
