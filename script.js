@@ -54,7 +54,6 @@ const questions = [
 const scores = { a: 0, b: 0, c: 0, d: 0 };
 let currentQuestion = 0;
 
-// Pré-carrega imagens
 const preloadImages = [...questions.map(q => q.image), 'grifinoria.jpeg', 'corvinal.jpeg', 'lufalufa.jpeg', 'sonserina.jpeg'];
 preloadImages.forEach(src => {
   const img = new Image();
@@ -71,7 +70,7 @@ function fadeOut(el, callback) {
 function fadeIn(el) {
   setTimeout(() => {
     el.classList.add('show');
-  }, 10); // pequena espera para permitir o transition
+  }, 10);
 }
 
 function startQuiz() {
@@ -139,13 +138,12 @@ function showResult() {
       "Sonserina": "sonserina.jpeg"
     };
 
-    document.body.style.backgroundImage = `url('${houseImages[house]}')`;
+    document.body.style.background = "#000";
+    document.body.style.backgroundImage = "none";
 
+    quiz.classList.add("result-screen");
     quiz.innerHTML = `
-      <h1>Sua Casa é...</h1>
-      <h2 style="font-size: 3rem; color: gold;">${house}</h2>
-      <img src="${houseImages[house]}" alt="${house}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,0.3); margin: 20px 0;">
-      <p>Você se destacou pelas qualidades e estratégias que representam essa casa no mundo corporativo mágico!</p>
+      <img src="${houseImages[house]}" alt="${house}" class="result-image">
     `;
     fadeIn(quiz);
   });
