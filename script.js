@@ -132,7 +132,7 @@ function showResult() {
       "Sonserina";
 
     const houseImages = {
-      "Grifinória": "grifinoria.jpeg",
+      "Grifinória": "Grifinoria.jpeg",
       "Corvinal": "corvinal.jpeg",
       "Lufa-Lufa": "lufalufa.jpeg",
       "Sonserina": "sonserina.jpeg"
